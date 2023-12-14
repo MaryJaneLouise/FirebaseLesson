@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import ph.edu.auf.firebaselesson.MainActivity
 import ph.edu.auf.firebaselesson.R
@@ -16,12 +17,22 @@ private const val NOTIFICATION_ID = 1234
 fun NotificationManager.sendNotification(messageBody: String, messageTitle: String, applicationContext: Context) {
     val contentIntent = Intent(applicationContext,MainActivity::class.java)
 
-    val pendingIntent = PendingIntent.getActivity(
-        applicationContext,
+    val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        PendingIntent.getActivity(
+            applicationContext,
+            NOTIFICATION_ID,
+            contentIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+    } else {
+        PendingIntent.getActivity(
+                applicationContext,
         NOTIFICATION_ID,
         contentIntent,
         PendingIntent.FLAG_UPDATE_CURRENT
-    )
+        )
+    }
+
 
     val aufImage = BitmapFactory.decodeResource(
         applicationContext.resources,

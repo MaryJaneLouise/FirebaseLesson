@@ -1,13 +1,20 @@
 package ph.edu.auf.firebaselesson.services
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import ph.edu.auf.firebaselesson.MainActivity
+import ph.edu.auf.firebaselesson.R
 import ph.edu.auf.firebaselesson.utils.sendNotification
 
 class FirebaseMessagingService : FirebaseMessagingService() {
@@ -36,4 +43,5 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             NotificationManager::class.java) as NotificationManager
         notificationManager.sendNotification(messageBody,messageTitle,applicationContext)
     }
+
 }
